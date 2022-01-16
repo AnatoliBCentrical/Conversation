@@ -1,0 +1,6 @@
+C:\Users\Centrical\OneDrive - Centrical\dev\Conversation 1.0\Conversation 1.0\obj\Debug\net472\Conversation 1.0.csproj.AssemblyReference.cache
+C:\Users\Centrical\OneDrive - Centrical\dev\Conversation 1.0\Conversation 1.0\obj\Debug\net472\Conversation 1.0.csproj.SuggestedBindingRedirects.cache
+C:\Users\Centrical\OneDrive - Centrical\dev\Conversation 1.0\Conversation 1.0\obj\Debug\net472\Conversation 1.0.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Centrical\OneDrive - Centrical\dev\Conversation 1.0\Conversation 1.0\obj\Debug\net472\Conversation 1.0.AssemblyInfoInputs.cache
+C:\Users\Centrical\OneDrive - Centrical\dev\Conversation 1.0\Conversation 1.0\obj\Debug\net472\Conversation 1.0.AssemblyInfo.cs
+C:\Users\Centrical\OneDrive - Centrical\dev\Conversation 1.0\Conversation 1.0\obj\Debug\net472\Conversation 1.0.csproj.CoreCompileInputs.cache
