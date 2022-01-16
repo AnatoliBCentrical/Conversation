@@ -1,0 +1,112 @@
+12/01
+
+1) add validation on Room level to get roomtype
+
+2) add 
+
+__________________________________________________________________________________________________________
+22/12
+
+1) Good to know - Handling text is done by input tag
+
+2) Change XPaths in repo
+
+3) Make sure test runs well
+_________________________________________________________________________________________________________
+07/12
+
+1) - V
+ change         internal void InsertMessage(string v)
+to remove click send. not every time we insert a message we will click send
+
+2) - V
+ Find a way to abriviate long sentances with ...
+
+3) - ?
+
+validations
+example use case:
+            Assert.IsTrue(Validations.StringCompare("x", "x"), "string are equals");
+as we talked with adiel the validations should be the compared value for the assert validation.
+
+4) - V
+
+write test using new methods
+_________________________________________________________________________________________________________
+23/11
+
+todos:
+1) - V
+public void SelectRoom(Room room)
+need to replace room with string
+
+2) - V
+public Message SelectLastMessageInRoom(bool isExpandMode)
+change to look by last message from list of Iwebelemetns instead of driver
+
+3) - V
+public void LoginToUser(string url, User user = null)
+Move from seleniumbase to new class (Login)
+
+4) - v
+add new class infra web - where all actions with driver will be stored
+
+Questions to Adiel:
+Best practice for FindElement/s method in infraweb
+
+5) - x 
+Crete new test
+
+Class heirarchy and defenitions:
+* test (: infra) 
+  //ConversationRA 
+* infra (: Base)  - where all actions with driver will be stored (Click, InsertText, Hover FindElement, Find elements) 
+  (example of desired method Click(By selector, IWebElement el))
+* Base - manages only setup and teardown
+
+
+_________________________________________________________________________________________________________
+17/11
+
+public bool isEmptyState { get; set; }
+in future we will validate according to if list is empty and there is not need for this bool.
+
+        public bool? isBoradcastMode { get; set; }
+set to nullable since we will use this parameter only on broadcast mode rooms
+        public Message? lastMessage { get; set; }
+should be deleted since we will search the list of msgs
+
+        public bool? isFromCoachingAction
+        { get; set; }
+removed and all isfrom bools since we will be using enums for validations
+
+1 hardcoded test send msg
+2 replace hardcoded with object - V
+3 add user object to login -V
+4 add repo and RA
+
+____
+
+add xpath for expand mode
+check xpath roomlist for expand mode
+return last messge retrun message not string (?)
+
+
+SRC
+_________________________________________________________________________________________________________
+10/11
+Weekly with Adiel:
+
+1) Change accessors to be set on property:
+Example -         public string roomName { get; set; }
+
+2) Change roomtype/message type on room level to Enum
+
+3) add nullable option to properties
+Example -         public DateTime ? sendTime;
+
+4) Pass login
+
+5) create objects Conversation > room > msg
+
+6) Add base setup class
