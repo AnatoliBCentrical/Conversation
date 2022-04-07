@@ -44,14 +44,20 @@ namespace Conversation_1._0._IdentifierAndPopulationService
         public Message PopulateMessageFromUI(IWebElement webElement, Infraweb infra)
         {
             Message msg = new Message();
-
-            msg.msgText = infra.GetElementInnerElement(webElement, IDAndPopulateConversationDataRepo.messageTextXPath).Text;
-            msg.sender.fullname = infra.GetElementInnerElement(webElement, IDAndPopulateConversationDataRepo.messageSenderNameXPath).Text;
-            msg.sendTime = infra.GetElementInnerElement(webElement, IDAndPopulateConversationDataRepo.messageSendDateXpath).Text;
-            msg.sender.userPic = infra.GetElementInnerElement(webElement, IDAndPopulateConversationDataRepo.messageSenderPicXPath).GetAttribute("style");
-            if (infra.GetElements(IDAndPopulateConversationDataRepo.ReturnReplyButtonXpathForMessage(msg.msgText)).Count > 0)
+            try
             {
-                msg.Replies = ReturnListOfRepliesFromReplyScreen(msg, infra);
+                msg.msgText = infra.GetElementInnerElement(webElement, IDAndPopulateConversationDataRepo.messageTextXPath).Text;
+                msg.sender.fullname = infra.GetElementInnerElement(webElement, IDAndPopulateConversationDataRepo.messageSenderNameXPath).Text;
+                msg.sendTime = infra.GetElementInnerElement(webElement, IDAndPopulateConversationDataRepo.messageSendDateXpath).Text;
+                msg.sender.userPic = infra.GetElementInnerElement(webElement, IDAndPopulateConversationDataRepo.messageSenderPicXPath).GetAttribute("style");
+                if (infra.GetElements(IDAndPopulateConversationDataRepo.ReturnReplyButtonXpathForMessage(msg.msgText)).Count > 0)
+                {
+                    msg.Replies = ReturnListOfRepliesFromReplyScreen(msg, infra);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to populate Message {msg.msgText}. Exception:, {ex}");
             }
 
             return msg;
@@ -79,12 +85,19 @@ namespace Conversation_1._0._IdentifierAndPopulationService
 
             foreach (IWebElement el in roomsElements)
             {
-                Room newRoom = new Room();
-                newRoom.roomName = infra.GetElementInnerElement(el, IDAndPopulateConversationDataRepo.roomName).Text;
-                conversationService.OpenRoom(newRoom.roomName);
-                newRoom.Messages = GetListOfAllMessagesInRoom();
-                listOfRooms.Add(newRoom);
-                conversationService.ClickBackToRoomList();
+                    Room newRoom = new Room();
+                try
+                {
+                    newRoom.roomName = infra.GetElementInnerElement(el, IDAndPopulateConversationDataRepo.roomName).Text;
+                    conversationService.OpenRoom(newRoom.roomName);
+                    newRoom.Messages = GetListOfAllMessagesInRoom();
+                    listOfRooms.Add(newRoom);
+                    conversationService.ClickBackToRoomList();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to return Reply ButtonXpathForMessage for element {newRoom.roomName}. Exception:, {ex}");
+                }
 
 
             }
@@ -98,18 +111,25 @@ namespace Conversation_1._0._IdentifierAndPopulationService
             IList<IWebElement> roomsElements = infra.GetElements(IDAndPopulateConversationDataRepo.roomObj);
             foreach (var room in roomsElements)
             {
-                Room newRoom = new Room();
-                newRoom.roomName = infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.roomName).Text;
-                //newRoom.roomPic = infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.RoomIconGeneral).Text;
-                if (infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.roomGroupIcon) != null)
-                    newRoom.roomType = Room.RoomType.Group;
-                else if (infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.roomOUIcon) != null)
-                    newRoom.roomType = Room.RoomType.OrgUnit;
-                else if (infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.roomPersonalIcon) != null)
-                    newRoom.roomType = Room.RoomType.OneOnOne;
-                else
-                    throw new Exception($"Room type was not recognized by room pic {newRoom.roomName}");
-                roomList.Add(newRoom);
+                try
+                {
+                    Room newRoom = new Room();
+                    newRoom.roomName = infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.roomName).Text;
+                    newRoom.roomPic = infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.RoomIconGeneral).Text;
+                    //if (infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.roomGroupIcon) != null)
+                    //    newRoom.roomType = Room.RoomType.Group;
+                    //else if (infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.roomOUIcon) != null)
+                    //    newRoom.roomType = Room.RoomType.OrgUnit;
+                    //else if (infra.GetElementInnerElement(room, IDAndPopulateConversationDataRepo.roomPersonalIcon) != null)
+                    //    newRoom.roomType = Room.RoomType.OneOnOne;
+                    //else
+                    //    throw new Exception($"Room type was not recognized by room pic {newRoom.roomName}");
+                    roomList.Add(newRoom);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to return Reply Populate are return room {room.Text}. Exception:, {ex}");
+                }
 
             }
             return roomList;
@@ -159,10 +179,18 @@ namespace Conversation_1._0._IdentifierAndPopulationService
             List<Room> rooms = ReturnALlRooms();
             foreach (Room room in rooms)
             {
-                conversation.OpenRoom(room.roomName);
-                room.Messages = ReturnAllMessagesInRoom();
-                conversation.ClickBackToRoomList();
+                try
+                {
+                    conversation.OpenRoom(room.roomName);
+                    room.Messages = ReturnAllMessagesInRoom();
+                    conversation.ClickBackToRoomList();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to populate room {room.roomName}. Exception:, {ex}");
+                }
             }
+
             return rooms;
         }
 

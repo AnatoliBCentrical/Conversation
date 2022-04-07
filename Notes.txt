@@ -1,17 +1,25 @@
+06/02
+
+1) IDAndPopulateConversationDataService - Change name to be Full
+Change to "GetConversationDataFromUI"
+
+2) V - PopulateAndCreateConversationData - Add count
+
+3) try and catch are very resource expensive - and should be doen on base function level.
+
+4) read about stacktrace
+__________________________________________________________________________________________________________
 12/01
 
-1) add validation on Room level to get roomtype
-
-2) add 
+1) V - Add validation on Room level to get roomtype
 
 __________________________________________________________________________________________________________
 22/12
 
 1) Good to know - Handling text is done by input tag
 
-2) Change XPaths in repo
+2) V - Change XPaths in repo
 
-3) Make sure test runs well
 _________________________________________________________________________________________________________
 07/12
 
@@ -27,7 +35,7 @@ to remove click send. not every time we insert a message we will click send
 validations
 example use case:
             Assert.IsTrue(Validations.StringCompare("x", "x"), "string are equals");
-as we talked with adiel the validations should be the compared value for the assert validation.
+as we talked with Adiel the validations should be the compared value for the assert validation.
 
 4) - V
 

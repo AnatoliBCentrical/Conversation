@@ -24,39 +24,61 @@ namespace Conversation_1._0.Conversation_Service
 
         public void OpenRoom(string roomName)
         {
-            infra.ClickOn(ConversationRepos.GetRoomPath(roomName));
+            try
+            {
+                infra.ClickOn(ConversationRepos.GetRoomPath(roomName));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to OpenRoom {roomName}. Exception:, {ex}");
+            }
         }
 
         public void SetConversationData(Conversation conversaion)
         {
             foreach (var room in conversaion.RoomList)
             {
-                if (conversaion.RoomList.LastOrDefault() == room && conversaion.RoomList.Count > 1)//last room
-                {
-                    ClickBackToRoomList();
-                }
-                OpenRoom(room.roomName);
+                SetRoomData(conversaion, room);
+            }
+        }
 
-                foreach (var msg in room.Messages)
-                {
-                    InsertMessageAndSend(msg);
-                    if (msg.Replies != null)
-                    {
-                        OpenRepliesScreenToMessage(msg.msgText);
-                        foreach (var reply in msg.Replies)
-                        {
-                            if (reply.msgText != null && reply.msgText != String.Empty)
-                            {
-                                InsertMessageAndSend(reply);
-                            }
+        private void SetRoomData(Conversation conversaion, Room room)
+        {
+            if (conversaion.RoomList.LastOrDefault() == room && conversaion.RoomList.Count > 1)//last room
+            {
+                ClickBackToRoomList();
+            }
+            OpenRoom(room.roomName);
 
-                            if (msg.Replies.LastOrDefault() == reply)
-                            {
-                                ClickBackToRoomList();
-                            }
-                        }
-                    }
+            foreach (var msg in room.Messages)
+            {
+                SetMessageData(msg);
+            }
+        }
+
+        private void SetMessageData(Message msg)
+        {
+            InsertMessageAndSend(msg);
+            if (msg.Replies != null)
+            {
+                OpenRepliesScreenToMessage(msg.msgText);
+                foreach (var reply in msg.Replies)
+                {
+                    SetReplyData(msg, reply);
                 }
+            }
+        }
+
+        private void SetReplyData(Message msg, Message reply)
+        {
+            if (reply.msgText != null && reply.msgText != String.Empty)
+            {
+                InsertMessageAndSend(reply);
+            }
+
+            if (msg.Replies.LastOrDefault() == reply)
+            {
+                ClickBackToRoomList();
             }
         }
 
@@ -135,10 +157,19 @@ namespace Conversation_1._0.Conversation_Service
         }
         public void InsertMessageAndSend(Message message)
         {
-            infra.InsertText(ConversationRepos.textBox, message.msgText);
-            infra.ClickOn(ConversationRepos.sendButton);
+            try
+            {
+                infra.InsertText(ConversationRepos.textBox, message.msgText);
+                infra.ClickOn(ConversationRepos.sendButton);
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to send message {message.msgText}. Exception:, {ex}");
+            }
+
+            message.sender.fullname = "Me";
             //message.sendTime = DateTime.Now;
-            //message.sender.fullname = "Me";
         }
 
         internal void ClickBackToRoomList()

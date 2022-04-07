@@ -205,6 +205,25 @@ namespace Conversation_1._0
             var lastUserFromUI = conversationService.SelectLastMessageInRoom(false).sendTime;
             Assert.IsTrue(Validations.Validations.StringCompare(lastUserFromUI, lastMessageDate));
         }
+        [TestCaseSource("Test")]
+        public void SendMessageToChatAndValidateMessageDate1(Conversation conversaion)
+        {
+            //Arrange
+            LoginService loginService = new LoginService(_Infra);
+            ConversationService conversationService = new ConversationService(_Infra);
+            var lastMessageDate = conversaion.RoomList.FirstOrDefault().Messages.LastOrDefault().sendTime;
+
+            //Act
+            loginService.LoginToUser(@"https://ge4getst2.gameffective.me/w");
+            //loginService.CloseLoginPopup();
+            conversationService.OpenConversation();
+            conversationService.ClickOnExpandMode(conversaion.isExpandMode);
+            conversationService.SetConversationData(conversaion);
+
+            //Assert
+            var lastUserFromUI = conversationService.SelectLastMessageInRoom(false).sendTime;
+            Assert.IsTrue(Validations.Validations.StringCompare(lastUserFromUI, lastMessageDate));
+        }
 
         [Test]
         public void testingPopulation()
@@ -215,7 +234,12 @@ namespace Conversation_1._0
             loginService.LoginToUser(@"https://ge4getst2.gameffective.me/w");
             conversationService.OpenConversation();
             //identifierAndPopulationService.ReturnFullConversationData(conversationService);
-            identifierAndPopulationService.PopulateAndCreateConversationData(conversationService);
+            List<Room> roomListFromUI = identifierAndPopulationService.PopulateAndCreateConversationData(conversationService);
+            Validations.Validations.ValidateRoomList(roomListFromUI, roomListFromUI);
+
+
+
+
 
 
 

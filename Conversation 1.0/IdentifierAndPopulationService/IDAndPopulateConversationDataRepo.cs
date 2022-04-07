@@ -23,11 +23,25 @@ namespace Conversation_1._0._IdentifierAndPopulationService
 
         public static By ReturnReplyButtonXpathForMessage(string msgText)
         {
-            return By.XPath($"//div[text()='{msgText}']/parent::div/parent::div//div[@test-id='conversation-reply-button']");
+            try
+            {
+                return By.XPath($"//div[text()='{msgText}']/parent::div/parent::div//div[@test-id='conversation-reply-button']");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to return Reply ButtonXpathForMessage {msgText}. Exception:, {ex}");
+            }
         }
         public static By ReturnReplyCounterXpathForMessage(string msgText)
         {
-            return By.XPath($"//div[text()='{msgText}']/parent::div/parent::div//div[@class='reply-summary ng-star-inserted']");
+            try
+            {
+                return By.XPath($"//div[text()='{msgText}']/parent::div/parent::div//div[@class='reply-summary ng-star-inserted']");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to return Reply ReturnReplyCounterXpathForMessage {msgText}. Exception:, {ex}");
+            }
         }
 
         public static string roomXpath = "//div[@class='conversation-room']";
@@ -40,7 +54,7 @@ namespace Conversation_1._0._IdentifierAndPopulationService
         public static By roomGroupIcon = By.XPath(".//div[@class='conversation-image gm-image isSvg ng-star-inserted']");
         public static By roomOUIcon = By.XPath(".//div[@class='conversation-team-image-container ng-star-inserted']");
         public static By roomOUIconWithUploadedImage = By.XPath(".//div[@class='conversation-image gm-image ng-star-inserted']");
-        
+
         public static By roomDescryptionIndication = By.XPath(".//span[contains(@class,'room-description ng-star-inserted')]");
     }
 

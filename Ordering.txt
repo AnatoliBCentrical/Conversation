@@ -1,0 +1,16 @@
+Option A:
+Get list of all rooms
+open rm1
+Get list of all messages
+open msg1
+Get list of all replies
+== msg2's old element != msg2's new element (due to reload)
+
+Option B:
+Get list of all rooms
+open rm1
+Get list of all messages
+open msg1
+Get list of all replies
+go back to messagelist
+open next index 
